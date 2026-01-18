@@ -85,5 +85,29 @@ public class ExpenseService {
             throw new UserNotFoundException("User with ID " + userId + " not found");
         }
         return expenseRepository.findByUserId(userId);
+
     }
+    // --- Added for SWE303 testing: numerical output + clear decision logic ---
+// Reason: the original project did not include total/budget calculations,
+// and SWE303 requires BVT + equivalence + coverage on numeric ranges.
+
+    public double calculateTotalExpenses(int userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new UserNotFoundException("User with ID " + userId + " not found");
+        }
+        List<Expense> expenses = expenseRepository.findByUserId(userId);
+        return expenses.stream().mapToDouble(Expense::getAmount).sum();
+    }
+
+    /**
+     * @return true if budget is exceeded, false otherwise
+     */
+    public boolean checkBudgetLimit(int userId, double budget) {
+        if (budget < 0) {
+            throw new IllegalArgumentException("Budget must be >= 0");
+        }
+        double total = calculateTotalExpenses(userId);
+        return total > budget;
+    }
+
 }
