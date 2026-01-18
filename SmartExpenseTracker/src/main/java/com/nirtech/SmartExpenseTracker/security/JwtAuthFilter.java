@@ -1,6 +1,5 @@
 package com.nirtech.SmartExpenseTracker.security;
 
-import com.nirtech.SmartExpenseTracker.service.UserInfo;
 import com.nirtech.SmartExpenseTracker.util.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

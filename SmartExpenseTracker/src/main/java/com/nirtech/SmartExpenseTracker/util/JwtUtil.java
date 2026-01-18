@@ -1,6 +1,5 @@
 package com.nirtech.SmartExpenseTracker.util;
 
-import com.nirtech.SmartExpenseTracker.dto.UserDTO;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
