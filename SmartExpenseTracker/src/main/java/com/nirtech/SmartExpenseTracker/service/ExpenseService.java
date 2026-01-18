@@ -96,18 +96,12 @@ public class ExpenseService {
             throw new UserNotFoundException("User with ID " + userId + " not found");
         }
         List<Expense> expenses = expenseRepository.findByUserId(userId);
-        return expenses.stream().mapToDouble(Expense::getAmount).sum();
+        return expenses.stream().mapToDouble(e -> e.getAmount()).sum(); // <-- lambda (float -> double)
     }
 
-    /**
-     * @return true if budget is exceeded, false otherwise
-     */
     public boolean checkBudgetLimit(int userId, double budget) {
-        if (budget < 0) {
-            throw new IllegalArgumentException("Budget must be >= 0");
-        }
+        if (budget < 0) throw new IllegalArgumentException("Budget must be >= 0");
         double total = calculateTotalExpenses(userId);
         return total > budget;
     }
-
 }
